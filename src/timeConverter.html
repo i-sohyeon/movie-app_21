@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+
+<script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+    // const root = document.getElementById("root");
+     function App() {
+         const [amount, setAmount ] = React.useState(); //state의 값은 array
+         const [flipped, setFlipped] = React.useState(false);
+         const onChange = (event) => {
+            setAmount (event.target.value);
+         };
+         const reset = () => setAmount (0); 
+         const onFlip = () => {
+             reset();
+            setFlipped((current) => !current); //(!flipped);
+         }
+         //현재 state값을 넣어주고, 결과는 그 반대를 도출하라고 명령
+
+       return(
+        <div>
+            <h1>Super Converter</h1>
+            <div>
+                <label htmlFor="minutes">Minutes</label>
+                <input
+                    value={flipped ? amount*60 : amount}
+                    id="minutes"
+                    type="number"
+                    placeholder="Minutes"  
+                    onChange={onChange}
+                    disabled={flipped}  //{flipped === true}
+                />
+            </div>
+            <div>
+                <label htmlFor="hours">Hours</label>
+                <input
+                    value={flipped ? amount : Math.round(amount / 60)}
+                    id="hours"
+                    type="number"
+                    placeholder="Hours"
+                    disabled={!flipped}  //{flipped === false}
+                    onChange={onChange} //이코드가 있어야지 input에 number가 작성됨
+                />
+            </div>
+            <button onClick={reset}>Reset</button>
+            <button onClick={onFlip}>Flip</button>
+
+        </div>
+       )
+     }
+
+     ReactDOM.render(<App />, root);
+ 
+</script>
+
+</html>
